@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>AJAX</title>
+</head>
+<body>
+<style>
+#render_div>p{border-bottom:1px solid #ddd; padding-bottom: 8px}
+	.hide-me{display: none}
+</style>
+<h1>JSON with AJAX</h1>
+
+ <div id="render_div"></div>
+ <div class="lazy_load" style="display: none"><img src="loader.gif" width="100px"></div>
+<button id="btn">Click here</button>
+
+<script src="jquery-3.2.1.min.js"></script>
+ <script>
+ $(document).ready(function(){
+ 	var a= 10;
+ 	var m =0;
+$("#btn").on('click', function(){
+ 
+ 	$.ajax({
+ 	Method:'GET',
+ 	url:'https://jsonplaceholder.typicode.com/posts',
+ 	beforeSend: function() {
+            $(".lazy_load").show();
+          },
+ 	success : function(data){
+ 		var mydata = ""
+ 		for(i = m; i<a; i++){	
+ 			mydata += '<p>'+ data[i].id + '</p>' + '<p>' + data[i].body + '.</p>'
+ 		}
+ 		
+ 		$('#render_div').append(mydata)
+		$(".lazy_load").hide();
+		a+=10
+		m+=10;
+ 		
+ 	}
+
+
+ })
+
+})
+
+ })
+ 
+ </script>
+
+</body>
+</html>
